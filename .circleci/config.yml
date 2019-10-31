@@ -8,4 +8,8 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: |
+          curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.5.1/kind-$(uname)-amd64
+          chmod +x ./kind
+          sudo mv ./kind /usr/local/bin/kind
+          kind create cluster
           docker ps
