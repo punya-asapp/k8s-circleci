@@ -1,0 +1,81 @@
+{
+	"info": {
+		"_postman_id": "fdaf8562-7aee-426d-b6ba-942a9abe8c8a",
+		"name": "example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "hello",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b249930a-7f3f-40e7-82f7-e7ecc08053ec",
+						"exec": [
+							"pm.test(\"Contains 'Hello'\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Hello\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "hello",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Thu, 31 Oct 2019 16:40:23 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "13"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "Hello, World!"
+				}
+			]
+		}
+	],
+	"protocolProfileBehavior": {}
+}

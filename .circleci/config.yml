@@ -7,13 +7,4 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: |
-          curl -sLo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.5.1/kind-$(uname)-amd64
-          chmod +x ./kind
-          sudo mv ./kind /usr/local/bin/kind
-
-          kind create cluster
-          cp "$(kind get kubeconfig-path --name="kind")" ./kubeconfig
-          docker build -t kubectl .
-
-          docker run --network host -it --rm kubectl cluster-info
+      - run: ./run.sh
