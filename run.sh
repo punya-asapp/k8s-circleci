@@ -10,11 +10,11 @@ kind create cluster
 cp "$(kind get kubeconfig-path --name="kind")" ./kubectl/kubeconfig
 docker build -t kubectl kubectl
 
-docker build -t server server
-kind load docker-image server
+docker build -t server:pinned server
+kind load docker-image server:pinned
 
-docker build -t integration integration
-kind load docker-image integration
+docker build -t integration:pinned integration
+kind load docker-image integration:pinned
 
-docker run --network host -it --rm kubectl run server --image=example --port=8080 --expose
-docker run --network host -it --rm kubectl run integration --rm --attach --restart=Never --image=integration
+docker run --network host -it --rm kubectl run server --image=example:pinned --port=8080 --expose
+docker run --network host -it --rm kubectl run integration --rm --attach --restart=Never --image=integration:pinned
