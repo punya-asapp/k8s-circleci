@@ -25,10 +25,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://example:8080/",
+					"raw": "http://server:8080/",
 					"protocol": "http",
 					"host": [
-						"example"
+						"server"
 					],
 					"port": "8080",
 					"path": [
