@@ -1,4 +1,3 @@
-FROM node
-RUN npm install -g newman
+FROM postman/newman
 ADD example.postman_collection.json .
 CMD newman run example.postman_collection.json
