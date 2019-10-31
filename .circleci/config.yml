@@ -12,10 +12,8 @@ jobs:
           chmod +x ./kind
           sudo mv ./kind /usr/local/bin/kind
 
-          curl -sLO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-          chmod +x ./kubectl
-          sudo mv ./kubectl /usr/local/bin/kubectl
-
           kind create cluster
-          export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
-          kubectl cluster-info
+          cp "$(kind get kubeconfig-path --name="kind")" ./kubeconfig
+          docker build -t kubectl .
+
+          docker run --network host -it --rm kubectl cluster-info
