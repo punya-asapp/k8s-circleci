@@ -16,5 +16,5 @@ kind load docker-image server:pinned
 docker build -t integration:pinned integration
 kind load docker-image integration:pinned
 
-docker run --network host -it --rm kubectl run server --image=example:pinned --port=8080 --expose
+docker run --network host -it --rm kubectl run server --image=server:pinned --port=8080 --expose
 docker run --network host -it --rm kubectl run integration --rm --attach --restart=Never --image=integration:pinned
