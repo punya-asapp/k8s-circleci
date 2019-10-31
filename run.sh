@@ -16,6 +16,5 @@ kind load docker-image server
 docker build -t integration integration
 kind load docker-image integration
 
-alias kubectl="docker run --network host -it --rm kubectl"
-kubectl run server --image=example --port=8080 --expose
-kubectl run integration --rm --attach --restart=Never --image=integration
+docker run --network host -it --rm kubectl run server --image=example --port=8080 --expose
+docker run --network host -it --rm kubectl run integration --rm --attach --restart=Never --image=integration

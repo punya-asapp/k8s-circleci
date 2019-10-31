@@ -25,56 +25,17 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/",
+					"raw": "http://example:8080/",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"example"
 					],
 					"port": "8080",
 					"path": [
 						""
 					]
 				}
-			},
-			"response": [
-				{
-					"name": "hello",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								""
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "plain",
-					"header": [
-						{
-							"key": "Date",
-							"value": "Thu, 31 Oct 2019 16:40:23 GMT"
-						},
-						{
-							"key": "Content-Length",
-							"value": "13"
-						},
-						{
-							"key": "Content-Type",
-							"value": "text/plain; charset=utf-8"
-						}
-					],
-					"cookie": [],
-					"body": "Hello, World!"
-				}
-			]
+			}
 		}
 	],
 	"protocolProfileBehavior": {}
