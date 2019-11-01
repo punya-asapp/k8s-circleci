@@ -1,7 +1,7 @@
 FROM golang
 RUN mkdir /src
 WORKDIR /src
-ADD *.go .
+ADD *.go ./
 RUN go build -o example .
 
 FROM ubuntu
