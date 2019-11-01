@@ -16,21 +16,6 @@ jobs:
             cp $(k3d get-kubeconfig) ./kubectl/kubeconfig
             docker build -t kubectl kubectl
 
-      # - run:
-      #     name: Set up K8s
-      #     command: |
-      #       curl -sLo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.5.1/kind-$(uname)-amd64
-      #       chmod +x ./kind
-      #       sudo mv ./kind /usr/local/bin/kind
-
-      #       kind create cluster
-
-      #       # CircleCI's Docker implementation doesn't support mounting volumes
-      #       # from the primary container to remote containers. We work around
-      #       # this by embedding the kubeconfig file into the image.
-      #       cp "$(kind get kubeconfig-path --name="kind")" ./kubectl/kubeconfig
-      #       docker build -t kubectl kubectl
-
       - run:
           name: Build and run server
           command: |
@@ -42,7 +27,7 @@ jobs:
             docker build -t server:pinned server
 
             # Make the image available to K8s
-            kind load docker-image server:pinned
+            k3d load-images server:pinned
 
             # Use Docker to invoke kubectl, which will create K8s resources
             # that reference this image.
@@ -52,5 +37,5 @@ jobs:
           name: Build and run integration tests
           command: |
             docker build -t integration:pinned integration
-            kind load docker-image integration:pinned
+            k3d load-images integration:pinned
             docker run --network host -it --rm kubectl run integration --rm --attach --restart=Never --image=integration:pinned
