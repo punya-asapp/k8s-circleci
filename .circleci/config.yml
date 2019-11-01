@@ -7,42 +7,45 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - run: Set up K3d
+        command: |
+          wget -q -O - https://raw.githubusercontent.com/rancher/k3d/master/install.sh | bash
 
-      - run:
-          name: Set up K8s
-          command: |
-            curl -sLo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.5.1/kind-$(uname)-amd64
-            chmod +x ./kind
-            sudo mv ./kind /usr/local/bin/kind
+      # - run:
+      #     name: Set up K8s
+      #     command: |
+      #       curl -sLo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.5.1/kind-$(uname)-amd64
+      #       chmod +x ./kind
+      #       sudo mv ./kind /usr/local/bin/kind
 
-            kind create cluster
+      #       kind create cluster
 
-            # CircleCI's Docker implementation doesn't support mounting volumes
-            # from the primary container to remote containers. We work around
-            # this by embedding the kubeconfig file into the image.
-            cp "$(kind get kubeconfig-path --name="kind")" ./kubectl/kubeconfig
-            docker build -t kubectl kubectl
+      #       # CircleCI's Docker implementation doesn't support mounting volumes
+      #       # from the primary container to remote containers. We work around
+      #       # this by embedding the kubeconfig file into the image.
+      #       cp "$(kind get kubeconfig-path --name="kind")" ./kubectl/kubeconfig
+      #       docker build -t kubectl kubectl
 
-      - run:
-          name: Build and run server
-          command: |
-            # Note that we need to set the tag to something other than 'latest'
-            # so that the ImagePullPolicy is set to Never. This is important
-            # because we're relying on a local image.
+      # - run:
+      #     name: Build and run server
+      #     command: |
+      #       # Note that we need to set the tag to something other than 'latest'
+      #       # so that the ImagePullPolicy is set to Never. This is important
+      #       # because we're relying on a local image.
 
-            # Build the image locally (i.e. in the remote Docker environment)
-            docker build -t server:pinned server
+      #       # Build the image locally (i.e. in the remote Docker environment)
+      #       docker build -t server:pinned server
 
-            # Make the image available to K8s
-            kind load docker-image server:pinned
+      #       # Make the image available to K8s
+      #       kind load docker-image server:pinned
 
-            # Use Docker to invoke kubectl, which will create K8s resources
-            # that reference this image.
-            docker run --network host -it --rm kubectl run server --image=server:pinned --port=8080 --expose
+      #       # Use Docker to invoke kubectl, which will create K8s resources
+      #       # that reference this image.
+      #       docker run --network host -it --rm kubectl run server --image=server:pinned --port=8080 --expose
 
-      - run:
-          name: Build and run integration tests
-          command: |
-            docker build -t integration:pinned integration
-            kind load docker-image integration:pinned
-            docker run --network host -it --rm kubectl run integration --rm --attach --restart=Never --image=integration:pinned
+      # - run:
+      #     name: Build and run integration tests
+      #     command: |
+      #       docker build -t integration:pinned integration
+      #       kind load docker-image integration:pinned
+      #       docker run --network host -it --rm kubectl run integration --rm --attach --restart=Never --image=integration:pinned
