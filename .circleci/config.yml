@@ -13,7 +13,7 @@ jobs:
             wget -q -O - https://raw.githubusercontent.com/rancher/k3d/master/install.sh | bash
             k3d create
             
-            k3d get-kubeconfig > ./kubectl/kubeconfig
+            cp $(k3d get-kubeconfig) ./kubectl/kubeconfig
             docker build -t kubectl kubectl
 
       # - run:
