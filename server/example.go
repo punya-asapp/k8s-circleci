@@ -3,7 +3,8 @@
 package main
 
 import (
-	context "context"
+	"context"
+	"fmt"
 	"net/http"
 )
 
@@ -16,5 +17,8 @@ func (server) AveragePrice(ctx context.Context, req *AveragePriceRequest) (*Aver
 func main() {
 	s := NewSummarizerServer(server{}, nil)
 	http.Handle(s.PathPrefix(), s)
+	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "ok")
+	})
 	http.ListenAndServe(":8080", nil)
 }
