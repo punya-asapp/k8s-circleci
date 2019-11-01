@@ -1,13 +1,20 @@
+//go:generate protoc --twirp_out=. --go_out=. example.proto
+
 package main
 
 import (
-	"fmt"
+	context "context"
 	"net/http"
 )
 
+type server struct{}
+
+func (server) AveragePrice(ctx context.Context, req *AveragePriceRequest) (*AveragePriceResponse, error) {
+	return &AveragePriceResponse{AveragePrice: 42.0}, nil
+}
+
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "Hello, World!")
-	})
+	s := NewSummarizerServer(server{}, nil)
+	http.Handle(s.PathPrefix(), s)
 	http.ListenAndServe(":8080", nil)
 }

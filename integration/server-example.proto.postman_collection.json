@@ -1,0 +1,125 @@
+{
+	"info": {
+		"_postman_id": "8cb1632c-f0f6-4a88-bd71-70be0e45f59a",
+		"name": "server/example.proto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Average Price",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f2bdaeff-5e65-4767-82e3-a99f8bd58dda",
+						"exec": [
+							"pm.test(\"Average price is 42\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.average_price).to.eql(42);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"instrument\": \"TBD\",\n    \"num_points\": 5\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/twirp/Summarizer/AveragePrice",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"twirp",
+						"Summarizer",
+						"AveragePrice"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "A successful response.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"instrument\": \"<string>\",\n    \"num_points\": \"<long>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/twirp/Summarizer/AveragePrice",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"twirp",
+								"Summarizer",
+								"AveragePrice"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"average_price\": \"<float>\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "16064f03-ffad-4e17-bc29-e39063c1f64a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "651698f1-e569-4a9b-a1f6-e32c8c431588",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "a82b783d-e332-494e-8092-41025d008413",
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
