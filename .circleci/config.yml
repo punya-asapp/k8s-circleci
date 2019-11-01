@@ -27,7 +27,7 @@ jobs:
             docker build -t server:pinned server
 
             # Make the image available to K8s
-            k3d load-images server:pinned
+            k3d import-images server:pinned
 
             # Use Docker to invoke kubectl, which will create K8s resources
             # that reference this image.
@@ -37,5 +37,5 @@ jobs:
           name: Build and run integration tests
           command: |
             docker build -t integration:pinned integration
-            k3d load-images integration:pinned
+            k3d import-images integration:pinned
             docker run --network host -it --rm kubectl run integration --rm --attach --restart=Never --image=integration:pinned
