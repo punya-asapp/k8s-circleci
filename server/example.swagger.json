@@ -1,0 +1,68 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "server/example.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/twirp/Summarizer/AveragePrice": {
+      "post": {
+        "operationId": "AveragePrice",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AveragePriceResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AveragePriceRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Summarizer"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AveragePriceRequest": {
+      "type": "object",
+      "properties": {
+        "instrument": {
+          "type": "string"
+        },
+        "num_points": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "AveragePriceResponse": {
+      "type": "object",
+      "properties": {
+        "average_price": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    }
+  }
+}

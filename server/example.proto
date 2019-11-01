@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "main";
+
+service Summarizer {
+    rpc AveragePrice(AveragePriceRequest) returns (AveragePriceResponse);
+}
+
+message AveragePriceRequest {
+    string instrument = 1;
+    uint32 num_points = 2;
+}
+
+message AveragePriceResponse {
+    float average_price = 1;
+}
