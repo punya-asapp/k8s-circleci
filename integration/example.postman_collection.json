@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "fdaf8562-7aee-426d-b6ba-942a9abe8c8a",
+		"_postman_id": "de12e509-8bb9-4ab4-a741-a5c9ec40af1f",
 		"name": "example",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,6 +15,10 @@
 						"exec": [
 							"pm.test(\"Contains 'Hello'\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"Hello\");",
+							"});",
+							"",
+							"pm.test(\"Contains 'World'\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"World\");",
 							"});"
 						],
 						"type": "text/javascript"
@@ -25,17 +29,18 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://server:8080/",
+					"raw": "http://server/",
 					"protocol": "http",
 					"host": [
 						"server"
 					],
-					"port": "8080",
+					"port": "",
 					"path": [
 						""
 					]
 				}
-			}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

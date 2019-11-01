@@ -17,32 +17,22 @@ jobs:
 
             kind create cluster
 
-            # CircleCI's Docker implementation doesn't support mounting volumes
-            # from the primary container to remote containers. We work around
-            # this by embedding the kubeconfig file into the image.
             cp "$(kind get kubeconfig-path --name="kind")" ./kubectl/kubeconfig
             docker build -t kubectl kubectl
 
       - run:
-          name: Build and run server
+          name: Build and load images
           command: |
-            # Note that we need to set the tag to something other than 'latest'
-            # so that the ImagePullPolicy is set to Never. This is important
-            # because we're relying on a local image.
-
-            # Build the image locally (i.e. in the remote Docker environment)
-            docker build -t server:pinned server
-
-            # Make the image available to K8s
-            kind load docker-image server:pinned
-
-            # Use Docker to invoke kubectl, which will create K8s resources
-            # that reference this image.
-            docker run --network host -it --rm kubectl run server --image=server:pinned --port=8080 --expose
+            docker build -t server server
+            docker build -t integration integration
+            kind load image-archive <(docker save server integration)
 
       - run:
-          name: Build and run integration tests
+          name: Run server
           command: |
-            docker build -t integration:pinned integration
-            kind load docker-image integration:pinned
+            docker run --network host -it --rm kubectl apply -f server.yaml
+
+      - run:
+          name: Run integration tests
+          command: |
             docker run --network host -it --rm kubectl run integration --rm --attach --restart=Never --image=integration:pinned

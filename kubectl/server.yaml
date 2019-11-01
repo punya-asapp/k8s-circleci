@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: server
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: server
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: server
+  name: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: server
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: server
+    spec:
+      containers:
+      - image: server
+        imagePullPolicy: Never
+        name: server
+        ports:
+        - containerPort: 8080
+        resources: {}
