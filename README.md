@@ -1,4 +1,4 @@
-# kind-example
+# k8s-circleci
 
 [![CircleCI](https://circleci.com/gh/punya-asapp/k8s-circleci.svg?style=svg)](https://circleci.com/gh/punya-asapp/k8s-circleci)
 
